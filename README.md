@@ -3,12 +3,8 @@
 Asistente **full-stack agentic** que prepara borradores de cotización B2B para la empresa
 XYZ.sac, con **humano en el bucle**. A partir de una solicitud en texto libre, el sistema
 interpreta el pedido, consulta el dominio, calcula de forma determinista, se detiene para
-aprobación cuando corresponde, y genera un borrador — **sin enviar nada al cliente y sin
+aprobación cuando corresponde, y genera un borrador **sin enviar nada al cliente y sin
 inventar datos**.
-
-> Reto técnico FutureLab — Senior Full-Stack Agentic Engineer.
-
----
 
 ## Qué hace
 
