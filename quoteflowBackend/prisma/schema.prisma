@@ -1,0 +1,61 @@
+// ─────────── Configuración ───────────
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────── Enums ───────────
+
+// Tier del cliente. Define cuánto descuento tiene permitido.
+// (La política "qué % permite cada tier" vive en código, no aquí:
+//  así se puede cambiar en vivo en la demo sin tocar la base.)
+enum Tier {
+  STANDARD
+  SILVER
+  GOLD
+}
+
+// Los estados posibles de una solicitud = los 5 resultados del reto.
+enum EstadoSolicitud {
+  NEW                  // recién ingresada
+  NEEDS_CLARIFICATION  // falta info -> pedir aclaración
+  UNKNOWN_PRODUCT      // producto no existe -> detener
+  OUT_OF_STOCK         // sin stock -> detener
+  PENDING_APPROVAL     // >10k o descuento fuera de política -> espera humano
+  DRAFT_READY          // borrador listo para el asesor
+  REJECTED             // el humano rechazó
+  ESCALATED            // cliente desconocido -> revisión
+}
+
+// ─────────── Tablas ───────────
+
+// Catálogo de productos.
+model Producto {
+  sku    String  @id
+  nombre String
+  precio Decimal @db.Decimal(10, 2) // dinero: nunca float
+  stock  Int
+}
+
+// Clientes conocidos. Si un cliente NO está aquí -> se considera
+// desconocido -> la solicitud se escala a revisión.
+model Cliente {
+  id     String @id
+  nombre String
+  tier   Tier   @default(STANDARD)
+}
+
+// Cada cotización que entra. También sirve de índice de la bandeja
+// (lo que el asesor ve listado con su estado).
+model Solicitud {
+  id            String          @id @default(cuid())
+  clienteRef    String          // lo que el asesor escribió como cliente (puede no existir en Cliente)
+  textoOriginal String          // el mensaje en texto libre — entrada NO confiable
+  estado        EstadoSolicitud @default(NEW)
+  creadaEn      DateTime        @default(now())
+  actualizadaEn DateTime        @updatedAt
+}
