@@ -1,0 +1,7 @@
+h2 { margin-top: 8px; }
+.campo { margin: 12px 0; display: flex; flex-direction: column; gap: 4px; }
+label { font-size: 14px; color: #555; }
+input, textarea { padding: 8px; border: 1px solid #ccc; border-radius: 6px; font-family: inherit; }
+button { padding: 10px 24px; border: none; border-radius: 6px; background: #2563eb; color: #fff; cursor: pointer; }
+button:disabled { opacity: 0.5; cursor: default; }
+.error { color: #dc2626; }

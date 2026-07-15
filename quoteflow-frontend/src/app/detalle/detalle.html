@@ -1,0 +1,58 @@
+<a routerLink="/">← Volver a la bandeja</a>
+
+@if (cargando()) {
+  <p>Cargando...</p>
+} @else if (detalle(); as d) {
+  <h2>Solicitud</h2>
+  <p><strong>Cliente:</strong> {{ d.clienteRef }}
+     @if (d.cliente?.nombre) { — {{ d.cliente?.nombre }} ({{ d.cliente?.tier }}) }
+  </p>
+  <p><strong>Mensaje:</strong> {{ d.textoOriginal }}</p>
+  <p><strong>Estado:</strong> <span class="badge">{{ d.estado }}</span></p>
+
+  @if (d.lineas.length) {
+    <h3>Cotización</h3>
+    <table>
+      <thead><tr><th>Producto</th><th>Cant.</th><th>Total</th></tr></thead>
+      <tbody>
+        @for (l of d.lineas; track l.sku) {
+          <tr><td>{{ l.nombre }}</td><td>{{ l.cantidad }}</td><td>{{ l.total }}</td></tr>
+        }
+      </tbody>
+    </table>
+    @if (d.pricing; as p) {
+      <p><strong>Descuento:</strong> {{ p.pctPedido }}% ·
+         <strong>Total:</strong> {{ p.total }}</p>
+    }
+  }
+
+  @if (d.aprobacion; as ap) {
+    @if (ap.requerida && ap.razones.length) {
+      <h3>Requiere aprobación porque:</h3>
+      <ul>
+        @for (r of ap.razones; track r) { <li>{{ r }}</li> }
+      </ul>
+    }
+  }
+
+  @if (d.estado === 'PENDING_APPROVAL') {
+    <div class="acciones">
+      <button class="ok" (click)="decidir('approve')" [disabled]="procesando()">Aprobar</button>
+      <button class="no" (click)="decidir('reject')" [disabled]="procesando()">Rechazar</button>
+    </div>
+  }
+
+  @if (d.borrador) {
+    <h3>Borrador</h3>
+    <pre class="borrador">{{ d.borrador }}</pre>
+  }
+
+  @if (d.traza.length) {
+    <h3>Traza del flujo</h3>
+    <ul class="traza">
+      @for (t of d.traza; track $index) { <li>{{ t.nodo }}: {{ t.nota }}</li> }
+    </ul>
+  }
+} @else {
+  <p>No se encontró la solicitud.</p>
+}

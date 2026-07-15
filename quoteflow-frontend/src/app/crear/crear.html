@@ -1,0 +1,21 @@
+<a routerLink="/">← Volver a la bandeja</a>
+
+<h2>Nueva solicitud</h2>
+
+<div class="campo">
+  <label>Cliente (ej. CLI-001)</label>
+  <input [(ngModel)]="clienteRef" (ngModelChange)="clienteRef.set($event)"
+         [value]="clienteRef()" placeholder="CLI-001" />
+</div>
+
+<div class="campo">
+  <label>Mensaje del cliente</label>
+  <textarea [value]="texto()" (input)="texto.set($any($event.target).value)"
+            rows="4" placeholder="quiero HX-200 x20 con 10% de descuento"></textarea>
+</div>
+
+@if (error()) { <p class="error">{{ error() }}</p> }
+
+<button (click)="enviar()" [disabled]="enviando()">
+  {{ enviando() ? 'Procesando...' : 'Crear solicitud' }}
+</button>

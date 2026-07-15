@@ -1,0 +1,24 @@
+<h2>Bandeja de solicitudes</h2>
+
+@if (cargando()) {
+  <p>Cargando...</p>
+} @else if (solicitudes().length === 0) {
+  <p>No hay solicitudes todavía.</p>
+} @else {
+  <table>
+    <thead>
+      <tr><th>Cliente</th><th>Solicitud</th><th>Estado</th></tr>
+    </thead>
+    <tbody>
+      @for (s of solicitudes(); track s.id) {
+        <tr [routerLink]="['/solicitud', s.id]" class="fila">
+          <td>{{ s.clienteRef }}</td>
+          <td>{{ s.textoOriginal }}</td>
+          <td><span class="badge">{{ s.estado }}</span></td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}
+
+<a routerLink="/crear" class="nuevo">+ Nueva solicitud</a>

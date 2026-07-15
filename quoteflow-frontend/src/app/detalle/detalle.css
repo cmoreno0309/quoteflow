@@ -1,0 +1,11 @@
+h2 { margin-top: 8px; }
+table { width: 100%; border-collapse: collapse; margin: 8px 0; }
+th, td { text-align: left; padding: 6px; border-bottom: 1px solid #ddd; }
+.badge { padding: 2px 10px; border-radius: 12px; background: #eee; font-size: 12px; }
+.acciones { margin: 16px 0; display: flex; gap: 12px; }
+button { padding: 8px 20px; border: none; border-radius: 6px; cursor: pointer; color: #fff; }
+button:disabled { opacity: 0.5; cursor: default; }
+.ok { background: #16a34a; }
+.no { background: #dc2626; }
+.borrador { background: #f6f6f6; padding: 12px; border-radius: 6px; white-space: pre-wrap; }
+.traza { color: #666; font-size: 13px; }
