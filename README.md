@@ -62,6 +62,18 @@ cd quoteflow-frontend
 npm install
 ng serve                    # app en http://localhost:4200
 ```
+## Los dos caminos
+
+**Camino feliz** — el descuento está dentro de la política del tier,
+el flujo llega hasta el borrador sin detenerse.
+
+![Camino feliz](docs/SolicitudCotizacion.jpg)
+
+**Requiere aprobación** — el descuento excede el máximo del tier.
+El grafo se detiene y espera decisión humana, mostrando el motivo:
+"descuento 8% supera el máximo 5% del tier STANDARD".
+
+![Requiere aprobación](docs/SolicitudPendienteAprobacion.jpg)
 
 ## Documentación
 
